@@ -3,8 +3,8 @@
 The e_book_store.py project is a simple solution to the management of stock in a book store. This project uses SQLite3 to provide database fuctionalities, including: adding a new book, updating book quantities, deleting a book from record, and searching for a specific book by it's book ID. The program ensures data integtiry via ensuring that book IDs have to be unique.
 
 ## Table of contents
-1. Installation
-2. Usage
+1. [Installation](#installation)
+2. [Usage](#usage)
 
 ## Installation
 1. Ensure that you have python installed on your computer in some form(MS Visual Studio Code, Python Interpreter etc.)
