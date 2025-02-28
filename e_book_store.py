@@ -122,7 +122,11 @@ def update():
                           WHERE id = ?''', (book_id,))
         book_details = cursor.fetchone()
         print(f"This is the updated record of book with ISBN: {book_id}")
-        print(book_details)
+        isbn, title, author, quantity = book_details
+        print(f"Title: {title}")
+        print(f"ISBN: {isbn}")
+        print(f"Author: {author}")
+        print(f"Quantity: {quantity}")
 
     # Possible exception handling
     except Exception:
@@ -168,7 +172,11 @@ def search():
                           WHERE id = ?''', (book_id,))
         book_details = cursor.fetchone()
         print(f"This is the record of book ISBN: {book_id}")
-        print(book_details)
+        isbn, title, author, quantity = book_details
+        print(f"Title: {title}")
+        print(f"ISBN: {isbn}")
+        print(f"Author: {author}")
+        print(f"Quantity: {quantity}")
 
     # Possible exception handling
     except Exception:
