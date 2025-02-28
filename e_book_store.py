@@ -29,31 +29,31 @@ def create_table():
 def fill():
     try:
         # Define values for book 1
-        book_1_id = 3001
+        book_1_id = 9781573353946
         book_1_title = 'A Tale of Two Cities'
         book_1_author = 'Charles Dickens'
         book_1_qty = 30
 
         # Define values for book 2
-        book_2_id = 3002
+        book_2_id = 9780747532743
         book_2_title = "Harry Potter and the Philosopher's Stone"
         book_2_author = 'J.K. Rowling'
         book_2_qty = 40
 
         # Define values for book 3
-        book_3_id = 3003
+        book_3_id = 9780060234812
         book_3_title = 'The Lion, the Witch and the Wardrobe'
         book_3_author = ' C. S. Lewis'
         book_3_qty = 25
 
         # Define values for book 4
-        book_4_id = 3004
+        book_4_id = 9780395595114
         book_4_title = 'The Lord of the Rings'
         book_4_author = 'J.R.R Tolkien'
         book_4_qty = 37
 
         # Define values for book 5
-        book_5_id = 3005
+        book_5_id = 9781101997369
         book_5_title = 'Alice in Wonderland'
         book_5_author = 'Lewis Carroll'
         book_5_qty = 12
@@ -83,7 +83,7 @@ def fill():
 def new_book():
     try:
         # Acquisition of information
-        book_id = int(input("What is the id of the new book?"))
+        book_id = int(input("What is the ISBN of the new book?"))
         book_title = input("What is the title of the new book?")
         book_author = input("Who authored the new  book?")
         book_qty = int(input("How many new books are currently in stock?"))
@@ -110,8 +110,9 @@ def new_book():
 def update():
     try:
         # Acquisition of information
-        book_id = int(input("What is the ID of the book to update?"))
-        updated_qty = int(input(f"How many books with the ID:{str(book_id)}" +
+        book_id = int(input("What is the ISBN of the book to update?"))
+        updated_qty = int(input("How many books with the ISBN: " +
+                                f"{str(book_id)}" +
                                 " are there in stock?"))
         # Deposition of information
         cursor.execute('''UPDATE book SET qty = ?
@@ -120,8 +121,12 @@ def update():
         cursor.execute('''SELECT id, title, author, qty FROM book
                           WHERE id = ?''', (book_id,))
         book_details = cursor.fetchone()
-        print(f"This is the updated record of book ID: {book_id}")
-        print(book_details)
+        print(f"This is the updated record of book with ISBN: {book_id}")
+        isbn, title, author, quantity = book_details
+        print(f"Title: {title}")
+        print(f"ISBN: {isbn}")
+        print(f"Author: {author}")
+        print(f"Quantity: {quantity}")
 
     # Possible exception handling
     except Exception:
@@ -139,7 +144,7 @@ def delete():
 
     try:
         # Acquisition of relevant details
-        book_id = int(input("What is the ID of the book to delete?"))
+        book_id = int(input("What is the ISBN of the book to delete?"))
         # Deletion of corresponding record
         cursor.execute('''DELETE FROM book
                           WHERE id = ?''', (book_id,))
@@ -160,14 +165,18 @@ def search():
 
     try:
         # Acquisition of data
-        book_id = int(input("What is the ID of the book to search?"))
+        book_id = int(input("What is the ISBN of the book to search?"))
 
         # Show new record to user for visual confirmation of success
         cursor.execute('''SELECT id, title, author, qty FROM book
                           WHERE id = ?''', (book_id,))
         book_details = cursor.fetchone()
-        print(f"This is the record of book ID: {book_id}")
-        print(book_details)
+        print(f"This is the record of book ISBN: {book_id}")
+        isbn, title, author, quantity = book_details
+        print(f"Title: {title}")
+        print(f"ISBN: {isbn}")
+        print(f"Author: {author}")
+        print(f"Quantity: {quantity}")
 
     # Possible exception handling
     except Exception:
@@ -183,6 +192,10 @@ fill()
 while True:
     # Menu display and input acquisition
     selection = int(input('''
+                All book specific actions will require the ISBN
+                of the book as an ID.
+                This ISBN number is found in close proximity to
+                the barcode on the back of the book.
                 1. Enter book
                 2. Update book
                 3. Delete book
@@ -214,5 +227,5 @@ while True:
 
     else:
         # Inform user of erroneous input and reattempt selection
-        print("You have made an invalid selection, please try again")
+        print("You have made an invalid selection, please try again.")
         pass
